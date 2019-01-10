@@ -243,13 +243,50 @@ int main() {
                     vector<double> next_x_vals;
                     vector<double> next_y_vals;
 
-                    // Move straight forward.
-                    double dist_inc = 0.5;
-                    for(int i = 0; i < 50; i++) {
-                        // We need to adjust for the car's current orientation in map coordinates.
-                        next_x_vals.push_back(car_x + (dist_inc * i) * cos(deg2rad(car_yaw)));
-                        next_y_vals.push_back(car_y + (dist_inc * i) * sin(deg2rad(car_yaw)));
+                    double pos_x;
+                    double pos_y;
+                    double angle;
+                    int path_size = previous_path_x.size();
+
+                    // Add the remaining waypoints of the previous path.
+                    for(int i = 0; i < path_size; i++)
+                    {
+                        next_x_vals.push_back(previous_path_x[i]);
+                        next_y_vals.push_back(previous_path_y[i]);
                     }
+
+                    // If there were no previous waypoints, initialize from the current position,
+                    // otherwise initialize from the last two waypoints.
+                    if(path_size == 0)
+                    {
+                        pos_x = car_x;
+                        pos_y = car_y;
+                        angle = deg2rad(car_yaw);
+                    }
+                    else
+                    {
+                        assert(path_size > 2);
+                        pos_x = previous_path_x[path_size-1];
+                        pos_y = previous_path_y[path_size-1];
+
+                        double pos_x2 = previous_path_x[path_size-2];
+                        double pos_y2 = previous_path_y[path_size-2];
+                        angle = atan2(pos_y-pos_y2,pos_x-pos_x2);
+                    }
+
+                    // We're now creating a circular track by moving forward in the direction of the car.
+                    double dist_inc = 0.5;
+                    for(int i = 0; i < 50-path_size; i++)
+                    {
+                        const auto new_angle = angle+(i+1)*(pi()/100);
+                        next_x_vals.push_back(pos_x+(dist_inc)*cos(new_angle));
+                        next_y_vals.push_back(pos_y+(dist_inc)*sin(new_angle));
+                        pos_x += (dist_inc)*cos(new_angle);
+                        pos_y += (dist_inc)*sin(new_angle);
+                    }
+                    
+                    msgJson["next_x"] = next_x_vals;
+                    msgJson["next_y"] = next_y_vals;
 
                     // TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
                     msgJson["next_x"] = next_x_vals;
