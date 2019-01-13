@@ -5,8 +5,8 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-#include "Eigen-3.3/Eigen/Core"
-#include "Eigen-3.3/Eigen/QR"
+#include <Eigen/Core>
+#include <Eigen/QR>
 #include "json.hpp"
 #include "math.h"
 #include "frenet.h"

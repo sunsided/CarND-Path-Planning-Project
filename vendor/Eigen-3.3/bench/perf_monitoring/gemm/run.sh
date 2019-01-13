@@ -149,8 +149,8 @@ echo "Complex:"
 cat $PREFIX"c""$bench.out"
 echo ""
 
-./make_plot.sh $PREFIX"s"$bench $bench
-./make_plot.sh $PREFIX"d"$bench $bench
-./make_plot.sh $PREFIX"c"$bench $bench
+make_plot.sh $PREFIX"s"$bench $bench
+make_plot.sh $PREFIX"d"$bench $bench
+make_plot.sh $PREFIX"c"$bench $bench
 
 
