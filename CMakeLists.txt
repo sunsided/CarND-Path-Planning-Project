@@ -7,7 +7,7 @@ add_definitions(-std=c++11)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
-set(sources src/main.cpp src/json.hpp src/math.h src/frenet.cpp src/frenet.h src/socketio_helpers.cpp src/socketio_helpers.h src/waypoints.cpp src/waypoints.h)
+set(sources src/main.cpp src/json.hpp src/math.h src/socketio_helpers.cpp src/socketio_helpers.h src/Map.cpp src/Map.h src/Planner.cpp src/Planner.h src/LaneInfo.h src/spline.h src/EnvContext.h src/lanes.h)
 
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
