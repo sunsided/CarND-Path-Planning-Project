@@ -3,6 +3,7 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <libraryRoots>
+      <file path="$PROJECT_DIR$/vendor" />
       <file path="$PROJECT_DIR$/vendor/Eigen-3.3" />
     </libraryRoots>
     <excludeRoots>
