@@ -53,6 +53,19 @@ struct RearClearanceTooLowCost final : public CostFunction {
     }
 };
 
+struct TrackedVehiclesInFrontCost final : public CostFunction {
+    explicit TrackedVehiclesInFrontCost(double weight) noexcept : CostFunction{weight} {}
+
+    double operator()(const LaneInfo &lane, const EnvContext &context) const final {
+        const auto max_count = 4;
+        const auto front_count = std::min(static_cast<size_t>(4), lane.front.size());
+        if (front_count == 1) return context.no_cost;
+
+        const auto cost = lerp(front_count, 0, max_count, 0, 0.99);
+        return scale(cost, context);
+    }
+};
+
 struct LaneVelocityCost final : public CostFunction {
     explicit LaneVelocityCost(double weight) noexcept : CostFunction{weight} {}
 
@@ -108,8 +121,9 @@ LaneCostEvaluation::LaneCostEvaluation() noexcept
     // Cost functions that encourage or prevent the selection of a lane
     track_cost<FrontClearanceTooLowCost>();
     track_cost<RearClearanceTooLowCost>();
-    track_cost<BaseLaneCost>(0.3);
-    track_cost<LaneVelocityCost>(0.3);
+    track_cost<BaseLaneCost>(0.1);
+    track_cost<LaneVelocityCost>(0.1);
+    track_cost<TrackedVehiclesInFrontCost>(0.2);
 
     // Cost functions that prevent the change of a lane
     track_cost<SideClearanceTooLowCost>();
@@ -122,6 +136,10 @@ double LaneCostEvaluation::operator()(const LaneInfo &lane, const EnvContext &co
     for (const auto& fun: _functions) {
         const auto local_cost = (*fun)(lane, context);
         cost = std::min(context.highest_cost, std::max(cost, local_cost));
+    }
+
+    if (cost <= context.score_threshold_lo) {
+        cost = context.no_cost;
     }
 
     return cost;

@@ -95,13 +95,14 @@ double Planner::planMotion(const EnvContext &context, const vector<LaneInfo> &la
         optimal_lane_idx = lane.lane_index;
     }
 
-    // Ignore any assumptions if they're still bad.
-    if (best_cost >= context.highest_cost) {
+    // Ignore any assumptions if they're still bad
+    // or not better than our current strategy.
+    auto current_cost = lane_costs.at(static_cast<size_t>(current_lane_idx));
+    if (best_cost >= context.highest_cost || best_cost >= current_cost) {
         optimal_lane_idx = current_lane_idx;
     }
 
-    auto current_cost = lane_costs.at(static_cast<size_t>(current_lane_idx));
-    auto target_speed = 0.0;
+    auto target_speed = 0.01;
 
     if (state == PlanningState::KeepLane) {
         const auto &current_lane = lane_infos[current_lane_idx];

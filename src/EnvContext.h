@@ -55,7 +55,7 @@ public:
     const double sim_update_freq = 0.02;
 
     /** Speed limit; [miles/h]. */
-    const double speed_limit_mph = 49.5;
+    const double speed_limit_mph = 49.8;
 
     /** Acceleration/deceleration limit, in [m/(s^2)]. */
     const double acc_limit = 10;
@@ -77,6 +77,9 @@ public:
 
     /** The lowerst possible cost value */
     const double no_cost = 0.0;
+
+    /** The lower score threshold */
+    const double score_threshold_lo = 0.04;
 
     /** The number of steps already issued to the simulator */
     size_t simulator_steps;
