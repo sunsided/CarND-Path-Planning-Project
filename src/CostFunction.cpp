@@ -60,6 +60,7 @@ struct TrackedVehiclesInFrontCost final : public CostFunction {
         const auto max_count = 4;
         const auto front_count = std::min(static_cast<size_t>(4), lane.front.size());
         if (front_count == 1) return context.no_cost;
+        if (lane.front.at(0).clearance() > context.distance_threshold) return context.no_cost;
 
         const auto cost = lerp(front_count, 0, max_count, 0, 0.99);
         return scale(cost, context);
@@ -72,6 +73,7 @@ struct LaneVelocityCost final : public CostFunction {
     double operator()(const LaneInfo &lane, const EnvContext &context) const final {
         const auto &front = lane.front.at(0);
         if (!front.valid()) return context.no_cost;
+        if (lane.front.at(0).clearance() > context.distance_threshold) return context.no_cost;
 
         const auto speed_delta = std::min(context.speed_limit_mph, context.speed_limit_mph - front.speed());
         if (speed_delta <= 0) return context.no_cost;

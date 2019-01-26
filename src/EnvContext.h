@@ -66,6 +66,9 @@ public:
     /** Safety margin; in [m]. */
     const double safety_margin = 30;
 
+    /** Front decision distance threshold; in [m]. */
+    const double distance_threshold = 100;
+
     /** Rear safety margin; in [m]. */
     const double rear_safety_margin = 10;
 
