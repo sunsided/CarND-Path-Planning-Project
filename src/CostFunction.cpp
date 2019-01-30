@@ -2,6 +2,7 @@
 #include "CostFunction.h"
 #include "lanes.h"
 
+[[maybe_unused]]
 static inline double square(double value) {
     return value * value;
 }
@@ -10,6 +11,9 @@ static inline double lerp(const double t, const double t_min = 0.0, const double
     const auto n = (t - t_min) / t_max;
     return n * min + (1 - n) * max;
 }
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 struct FrontClearanceTooLowCost final : public CostFunction {
     explicit FrontClearanceTooLowCost(double weight) noexcept : CostFunction{weight} {}
@@ -117,6 +121,8 @@ struct SkipOneLaneCost final : public CostFunction {
     }
 };
 
+#pragma clang diagnostic pop
+
 LaneCostEvaluation::LaneCostEvaluation() noexcept
     : CostFunction{1.0}
 {
@@ -146,3 +152,4 @@ double LaneCostEvaluation::operator()(const LaneInfo &lane, const EnvContext &co
 
     return cost;
 }
+
