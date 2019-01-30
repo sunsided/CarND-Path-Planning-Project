@@ -7,7 +7,7 @@ add_definitions(-std=c++11)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
-set(sources src/main.cpp)
+set(sources src/main.cpp src/math.h src/socketio_helpers.cpp src/socketio_helpers.h src/Map.cpp src/Map.h src/Planner.cpp src/Planner.h src/LaneInfo.h vendor/spline/spline.h src/EnvContext.h src/lanes.h src/TrackedVehicle.h src/SensorData.h src/PlanningState.h src/Trajectory.h src/CostFunction.h src/CostFunction.cpp)
 
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
@@ -22,5 +22,10 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 
 add_executable(path_planning ${sources})
+target_include_directories(path_planning
+        PRIVATE
+        vendor/Eigen-3.3
+        vendor/json
+        vendor/spline)
 
 target_link_libraries(path_planning z ssl uv uWS)

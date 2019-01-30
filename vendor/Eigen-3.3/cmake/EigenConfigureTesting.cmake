@@ -45,7 +45,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   option(EIGEN_COVERAGE_TESTING "Enable/disable gcov" OFF)
   if(EIGEN_COVERAGE_TESTING)
     set(COVERAGE_FLAGS "-fprofile-arcs -ftest-coverage")
-    set(CTEST_CUSTOM_COVERAGE_EXCLUDE "/test/")
+    set(CTEST_CUSTOM_COVERAGE_EXCLUDE "/vendor/Eigen-3.3/test")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_FLAGS}")
   endif(EIGEN_COVERAGE_TESTING)
   
