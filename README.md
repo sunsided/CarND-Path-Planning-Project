@@ -1,5 +1,7 @@
 # CarND Path Planning
 
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+
 The goal of this project is to safely navigate around a virtual highway with other traffic that is driving
 ±10 MPH of the 50 MPH speed limit. You will be provided the car's localization and sensor fusion data and there is 
 also a sparse map list of waypoints around the highway. 
