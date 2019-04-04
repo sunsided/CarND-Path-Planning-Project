@@ -155,7 +155,7 @@ Right now, the `PrepareLaneChange` state does not contain any useful logic and d
 would be a candidate to indicate lane changing intention, adjusting speed, generating a trajectory for changing, etc.
 
 Within `KeepLane`, all lanes are constantly evaluated for the need and opportunity to change.
-Evaluation is done eagerly so as to allow early lane changing: A slow at medium distance would still require a
+Evaluation is done eagerly so as to allow early lane changing: A slow car at medium distance would still require a
 lane change, so it does make sense to do it as early as possible - although, arguably, there should be some distance
 limit for this decision.
 If lane changes in the simulator appear to be unmotivated, this is the reason. :)
